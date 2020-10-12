@@ -1,5 +1,10 @@
 # Dll-Injector
 
+## Languages
+
+- [English](https://github.com/czs108/Dll-Injector/blob/main/README.md)
+- [简体中文](https://github.com/czs108/Dll-Injector/blob/main/README-CN.md)
+
 ## About The Project
 
 ***Dll-Injector*** is a **Windows Dynamic Link Library** injection tool written in *C++20*. It can inject a `.dll` file into a running process by searching its window title or create a new process with an injection.
