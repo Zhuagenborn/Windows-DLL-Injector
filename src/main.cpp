@@ -1,0 +1,127 @@
+/**
+ * @file main.cpp
+ * @brief The main program.
+ *
+ * @author Chen Zhenshuo (chenzs108@outlook.com)
+ * @version 1.0
+ * @date 2020-10-09
+ * @par GitHub
+ * https://github.com/czs108/
+ */
+
+import injector;
+import windows_error;
+
+#include <windows.h>
+
+#include <iostream>
+#include <memory>
+#include <string>
+#include <string_view>
+#include <vector>
+
+#include <cassert>
+
+namespace {
+
+/**
+ * Get command line arguments.
+ */
+std::vector<std::string> GetCmdLineArguments(const std::size_t argc,
+                                             char* const argv[]) noexcept;
+
+}  // namespace
+
+
+int main(int argc, char* argv[]) {
+    assert(argc >= 0);
+
+    const auto args = GetCmdLineArguments(static_cast<std::size_t>(argc), argv);
+
+    if (args.size() != 3 && args.size() != 4) {
+        std::cout << "[!] Usage: Dll-Injector [-f <proc-path> | <win-title>] "
+                     "<dll-path>"
+                  << std::endl
+                  << std::endl;
+
+        std::cout
+            << "[!] Example (1): Create a new process with a Dll injected."
+            << std::endl;
+        std::cout << "\t```" << std::endl;
+        std::cout << "\tDll-Injector -f <proc-path> <dll-path>" << std::endl;
+        std::cout << "\t```" << std::endl;
+        std::cout << "\tIf <dll-path> is a relative path, it must be relative "
+                     "to the process."
+                  << std::endl
+                  << std::endl;
+
+        std::cout << "[!] Example (2): Inject a Dll into a running process by "
+                     "its window title."
+                  << std::endl;
+        std::cout << "\t```" << std::endl;
+        std::cout << "\tDll-Injector <win-title> <dll-path>" << std::endl;
+        std::cout << "\t```" << std::endl;
+        std::cout << "\tIf <dll-path> is a relative path, it must be "
+                     "relative to the Dll-Injector."
+                  << std::endl
+                  << std::endl;
+
+        return EXIT_SUCCESS;
+    }
+
+    try {
+        std::unique_ptr<InjectorInterface> injector{};
+        if (args.size() == 3) {
+            injector = std::make_unique<RunningInjector>(args[1], args[2]);
+
+        } else if (args.size() == 4) {
+            if (args[1] != "-f") {
+                throw std::invalid_argument{
+                    "The format of the command arguments is invalid.\n"
+                };
+            }
+
+            injector = std::make_unique<StartupInjector>(args[2], args[3]);
+
+        } else {
+            assert(false);
+        }
+
+        assert(injector != nullptr);
+
+        injector->Inject();
+
+        std::cout << "[*] The injection has finished." << std::endl;
+        return EXIT_SUCCESS;
+
+    } catch (const WindowsError& exp) {
+        if (exp.code().value() == ERROR_SUCCESS) {
+            std::cerr << "[!] Error: Maybe Dll-Injector can not find the "
+                         "target window."
+                      << std::endl;
+
+        } else {
+            std::cerr << "[!] Error: " << exp.what() << std::endl;
+        }
+
+    } catch (const std::exception& exp) {
+        std::cerr << "[!] Error: " << exp.what() << std::endl;
+    }
+
+    return EXIT_FAILURE;
+}
+
+
+namespace {
+
+std::vector<std::string> GetCmdLineArguments(const std::size_t argc,
+                                             char* const argv[]) noexcept {
+    std::vector<std::string> args{ argc };
+    for (auto i = 0; i != argc; i++) {
+        args[i] = argv[i];
+    }
+
+    return args;
+}
+
+}  // namespace
