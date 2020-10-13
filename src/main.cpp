@@ -28,7 +28,12 @@ namespace {
  * Get command line arguments.
  */
 std::vector<std::string> GetCmdLineArguments(const std::size_t argc,
-                                             char* const argv[]) noexcept;
+                                             const char* const argv[]) noexcept;
+
+/**
+ * Print the help information.
+ */
+void PrintHelp() noexcept;
 
 }  // namespace
 
@@ -39,33 +44,7 @@ int main(int argc, char* argv[]) {
     const auto args = GetCmdLineArguments(static_cast<std::size_t>(argc), argv);
 
     if (args.size() != 3 && args.size() != 4) {
-        std::cout << "[!] Usage: Dll-Injector [-f <proc-path> | <win-title>] "
-                     "<dll-path>"
-                  << std::endl
-                  << std::endl;
-
-        std::cout
-            << "[!] Example (1): Create a new process with a Dll injected."
-            << std::endl;
-        std::cout << "\t```" << std::endl;
-        std::cout << "\tDll-Injector -f <proc-path> <dll-path>" << std::endl;
-        std::cout << "\t```" << std::endl;
-        std::cout << "\tIf <dll-path> is a relative path, it must be relative "
-                     "to the process."
-                  << std::endl
-                  << std::endl;
-
-        std::cout << "[!] Example (2): Inject a Dll into a running process by "
-                     "its window title."
-                  << std::endl;
-        std::cout << "\t```" << std::endl;
-        std::cout << "\tDll-Injector <win-title> <dll-path>" << std::endl;
-        std::cout << "\t```" << std::endl;
-        std::cout << "\tIf <dll-path> is a relative path, it must be "
-                     "relative to the Dll-Injector."
-                  << std::endl
-                  << std::endl;
-
+        PrintHelp();
         return EXIT_SUCCESS;
     }
 
@@ -114,14 +93,43 @@ int main(int argc, char* argv[]) {
 
 namespace {
 
-std::vector<std::string> GetCmdLineArguments(const std::size_t argc,
-                                             char* const argv[]) noexcept {
+std::vector<std::string> GetCmdLineArguments(
+    const std::size_t argc, const char* const argv[]) noexcept {
     std::vector<std::string> args{ argc };
     for (auto i = 0; i != argc; i++) {
         args[i] = argv[i];
     }
 
     return args;
+}
+
+
+void PrintHelp() noexcept {
+    std::cout << "[!] Usage: Dll-Injector [-f <proc-path> | <win-title>] "
+                 "<dll-path>"
+              << std::endl
+              << std::endl;
+
+    std::cout << "[!] Example (1): Create a new process with a Dll injected."
+              << std::endl;
+    std::cout << "\t```" << std::endl;
+    std::cout << "\tDll-Injector -f <proc-path> <dll-path>" << std::endl;
+    std::cout << "\t```" << std::endl;
+    std::cout << "\tIf <dll-path> is a relative path, it must be relative "
+                 "to the process."
+              << std::endl
+              << std::endl;
+
+    std::cout << "[!] Example (2): Inject a Dll into a running process by "
+                 "its window title."
+              << std::endl;
+    std::cout << "\t```" << std::endl;
+    std::cout << "\tDll-Injector <win-title> <dll-path>" << std::endl;
+    std::cout << "\t```" << std::endl;
+    std::cout << "\tIf <dll-path> is a relative path, it must be "
+                 "relative to the Dll-Injector."
+              << std::endl
+              << std::endl;
 }
 
 }  // namespace
