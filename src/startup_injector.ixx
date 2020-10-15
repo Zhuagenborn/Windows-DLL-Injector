@@ -24,14 +24,14 @@ export module startup_injector;
 
 import injector_interface;
 
-import injection;
-import windows_error;
+import utility.injection;
+import utility.windows_error;
 
 /**
  * The injector for new starting processes.
  * It can create a new process with a Dll injected.
  */
-export class StartupInjector final : public InjectorInterface {
+export class StartupInjector final : public Injector {
 public:
     /**
      * A constructor.

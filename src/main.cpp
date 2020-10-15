@@ -10,7 +10,8 @@
  */
 
 import injector;
-import windows_error;
+
+import utility.windows_error;
 
 #include <windows.h>
 
@@ -49,7 +50,7 @@ int main(int argc, char* argv[]) {
     }
 
     try {
-        std::unique_ptr<InjectorInterface> injector{};
+        std::unique_ptr<Injector> injector{};
         if (args.size() == 3) {
             injector = std::make_unique<RunningInjector>(args[1], args[2]);
 

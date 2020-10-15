@@ -14,9 +14,9 @@ export module injector_interface;
 /**
  * The interface of a Dll injector.
  */
-export class InjectorInterface {
+export class Injector {
 public:
-    virtual ~InjectorInterface() = default;
+    virtual ~Injector() = default;
 
     /**
      * Injection.
