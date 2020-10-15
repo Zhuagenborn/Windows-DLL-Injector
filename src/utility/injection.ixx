@@ -18,9 +18,9 @@ module;
 
 #include <cassert>
 #include <cstddef>
-export module injection;
+export module utility.injection;
 
-import windows_error;
+import utility.windows_error;
 
 /**
  * The function type for closing a handle.

@@ -16,7 +16,7 @@ module;
 
 #include <string>
 #include <system_error>
-export module windows_error;
+export module utility.windows_error;
 
 /**
  * Throw a @em WindowsError exception containing the last-error.

@@ -24,8 +24,8 @@ export module running_injector;
 
 import injector_interface;
 
-import injection;
-import windows_error;
+import utility.injection;
+import utility.windows_error;
 
 #pragma comment(lib, "shlwapi.lib")
 
@@ -33,7 +33,7 @@ import windows_error;
  * The injector for running processes.
  * It can inject a Dll into a running process by searching its window title.
  */
-export class RunningInjector final : public InjectorInterface {
+export class RunningInjector final : public Injector {
 public:
     /**
      * A constructor.
