@@ -23,7 +23,7 @@ The project need to configure on/for **Windows 32-bit**.
 
 ## Usage
 
-```powershell
+```
 Dll-Injector [-f <proc-path> | <win-title>] <dll-path>
 ```
 
@@ -31,13 +31,13 @@ Dll-Injector [-f <proc-path> | <win-title>] <dll-path>
 
 To inject a `.dll` file into a running process, you need to specify the *window title* of the target process and the *path* of the `.dll` file. If `dll-path` is a relative path, it must be relative to the `Dll-Injector.exe`.
 
-```powershell
+```bash
 Dll-Injector <win-title> <dll-path>
 ```
 
 For example, inject the `dllmain_msg.dll` (assume it is in the same directory as *Dll-Injector*) into *Windows Calculator*:
 
-```powershell
+```bash
 Dll-Injector dllmain_msg.dll Calculator
 ```
 
@@ -45,7 +45,7 @@ Dll-Injector dllmain_msg.dll Calculator
 
 To create a new process with an injection, you must enable the `-f` option firstly and then specify the *paths* of the target process and `.dll` files. If `dll-path` is a relative path, it must be relative to the process file.
 
-```powershell
+```bash
 Dll-Injector -f <proc-path> <dll-path>
 ```
 
