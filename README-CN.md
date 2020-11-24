@@ -23,7 +23,7 @@
 
 ## 使用
 
-```powershell
+```
 Dll-Injector [-f <proc-path> | <win-title>] <dll-path>
 ```
 
@@ -31,13 +31,13 @@ Dll-Injector [-f <proc-path> | <win-title>] <dll-path>
 
 对运行中的进程进行注入时，需要指定目标进程的*窗口标题*和`.dll`文件的*路径*。如果`dll-path`参数是一个相对路径，则其必须相对于`Dll-Injector.exe`文件。
 
-```powershell
+```bash
 Dll-Injector <win-title> <dll-path>
 ```
 
 例如，将`dllmain_msg.dll`（假定其位于*Dll-Injector*目录）注入*Windows Calculator*进程：
 
-```powershell
+```bash
 Dll-Injector dllmain_msg.dll Calculator
 ```
 
@@ -45,7 +45,7 @@ Dll-Injector dllmain_msg.dll Calculator
 
 若需要在创建新进程时进行注入，必须先设置`-f`选项，然后再指定目标进程和`.dll`文件的*路径*。如果`dll-path`参数是一个相对路径，则其必须相对于进程文件。
 
-```powershell
+```bash
 Dll-Injector -f <proc-path> <dll-path>
 ```
 
