@@ -76,7 +76,7 @@ int main(int argc, char* argv[]) {
 
     } catch (const WindowsError& exp) {
         if (exp.code().value() == ERROR_SUCCESS) {
-            std::cerr << "[!] Error: Maybe Dll-Injector can not find the "
+            std::cerr << "[!] Error: Maybe Dll-Injector cannot find the "
                          "target window."
                       << std::endl;
 
