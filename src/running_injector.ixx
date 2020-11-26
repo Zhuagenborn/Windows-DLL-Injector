@@ -70,7 +70,7 @@ std::string GetFullFilePath(const std::string_view path);
  * @param win_title The window title of a process.
  *
  * @warning
- * If the function can not find the target window,
+ * If the function cannot find the target window,
  * it will throw a @em WindowsError exception containing an @em ERROR_SUCCESS code.
  */
 std::unique_ptr<HANDLE, HandleCloser> GetProcessHandle(
