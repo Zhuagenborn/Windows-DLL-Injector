@@ -66,10 +66,6 @@ public:
      * Get the explanatory message from an error code.
      */
     std::string message(const int err_code) const override;
-
-private:
-    //! The global instance of @em WindowsCategory.
-    static const WindowsCategory inst_;
 };
 
 
@@ -83,10 +79,9 @@ module : private;
 std::string FormatErrMsg(const int err_code);
 
 
-const WindowsCategory WindowsCategory::inst_{};
-
-
 const std::error_category& WindowsCategory::Instance() noexcept {
+    // The global instance of @em WindowsCategory.
+    static const WindowsCategory inst_{};
     return inst_;
 }
 
