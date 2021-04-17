@@ -1,5 +1,8 @@
 # Dll-Injector
 
+![C++](badges/C++-20-brightgreen.svg)
+[![License](badges/License-GPL-3.0-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
+
 ## Languages
 
 - [English](https://github.com/czs108/Dll-Injector/blob/main/README.md)
