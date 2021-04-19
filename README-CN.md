@@ -1,7 +1,8 @@
 # Dll-Injector
 
-![C++](badges/C++-20-brightgreen.svg)
-[![License](badges/License-GPL-3.0-blue.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
+![C++](badges/C++-20.svg)
+[![Windows](badges/Microsoft-Windows.svg)](https://www.microsoft.com/en-ie/windows)
+[![License](badges/License-GPL-3.0.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
 [![DOI](https://zenodo.org/badge/302512489.svg)](https://zenodo.org/badge/latestdoi/302512489)
 
 ## 翻译
