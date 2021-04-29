@@ -43,7 +43,7 @@ Dll-Injector <win-title> <dll-path>
 For example, inject the `dllmain_msg.dll` (assume it is in the same directory as *Dll-Injector*) into *Windows Calculator*:
 
 ```bash
-Dll-Injector dllmain_msg.dll Calculator
+Dll-Injector Calculator dllmain_msg.dll
 ```
 
 **Create a New Process with an Injection**
