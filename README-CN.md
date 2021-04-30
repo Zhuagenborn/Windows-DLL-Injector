@@ -43,7 +43,7 @@ Dll-Injector <win-title> <dll-path>
 例如，将`dllmain_msg.dll`（假定其位于*Dll-Injector*目录）注入*Windows Calculator*进程：
 
 ```bash
-Dll-Injector dllmain_msg.dll Calculator
+Dll-Injector Calculator dllmain_msg.dll
 ```
 
 **创建新进程时进行注入**
