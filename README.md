@@ -1,79 +1,88 @@
-# Dll-Injector
+# *Windows* Dynamic-Link Library Injector
 
-![C++](badges/C++-20.svg)
-[![Windows](badges/Microsoft-Windows.svg)](https://www.microsoft.com/en-ie/windows)
-[![License](badges/License-GPL-3.0.svg)](https://www.gnu.org/licenses/gpl-3.0.html)
-[![DOI](https://zenodo.org/badge/302512489.svg)](https://zenodo.org/badge/latestdoi/302512489)
+![C++](docs/badges/C++.svg)
+[![Windows](docs/badges/Microsoft-Windows.svg)](https://www.microsoft.com/en-ie/windows)
+![License](docs/badges/License-MIT.svg)
 
 ## Languages
 
-- [English](https://github.com/czs108/Dll-Injector/blob/main/README.md)
-- [简体中文](https://github.com/czs108/Dll-Injector/blob/main/README-CN.md)
+- [English](https://github.com/Zhuagenborn/Windows-DLL-Injector/blob/main/README.md)
+- [简体中文](https://github.com/Zhuagenborn/Windows-DLL-Injector/blob/main/README-CN.md)
 
-## About The Project
+## Introduction
 
-***Dll-Injector*** is a **Windows Dynamic Link Library** injection tool written in *C++20*. It can inject a `.dll` file into a running process by searching its window title or create a new process with an injection.
+***Dll-Injector*** is a ***Windows* dynamic-link library** injection tool written in *C++20*. It can inject a `.dll` file into a running process by searching its window title or create a new process with an injection.
 
 ## Getting Started
 
 **Warning**
 
-> Because there is no compiler can completely support *C++20* now, I did not commit my building configuration files. The following updates will fix this.
->
-> The current source code can be built manually with *Visual Studio 2019 Preview v16.8*.
+> The project does not contain building configuration files, the source code can be built manually with *Visual Studio 2022*.
 
 ### Prerequisites
 
-The project need to configure on/for **Windows 32-bit**.
+The project need to configure on/for ***Windows* 32-bit**.
 
 ## Usage
 
-```
+```console
 Dll-Injector [-f <proc-path> | <win-title>] <dll-path>
 ```
 
-**Inject a Dll into a Running Process**
+**Inject a Dynamic-Link Library Into a Running Process**
 
 To inject a `.dll` file into a running process, you need to specify the *window title* of the target process and the *path* of the `.dll` file. If `dll-path` is a relative path, it must be relative to the `Dll-Injector.exe`.
 
-```bash
+```console
 Dll-Injector <win-title> <dll-path>
 ```
 
 For example, inject the `dllmain_msg.dll` (assume it is in the same directory as *Dll-Injector*) into *Windows Calculator*:
 
-```bash
+```console
 Dll-Injector Calculator dllmain_msg.dll
 ```
 
-**Create a New Process with an Injection**
+**Create a New Process With an Injection**
 
-To create a new process with an injection, you must enable the `-f` option firstly and then specify the *paths* of the target process and `.dll` files. If `dll-path` is a relative path, it must be relative to the process file.
+To create a new process with an injection, you must enable the `-f` option firstly and then specify the *paths* of the target process and the `.dll` file. If `dll-path` is a relative path, it must be relative to the process file.
 
-```bash
+```console
 Dll-Injector -f <proc-path> <dll-path>
 ```
 
 ## Documents
 
-You can use [*Doxygen*](http://www.doxygen.nl/) to generate the document.
+Code comments follow [*Doxygen*](https://www.doxygen.nl) specification.
 
-In order to avoid scanning `.md` files, you must add `*.md` to the `EXCLUDE_PATTERNS` configuration option.
+### Class Diagram
 
+```mermaid
+classDiagram
+
+class Injector {
+    <<interface>>
+    +Inject()
+}
+
+class RunningInjector {
+    -string win_title
+    -string dll_path
+}
+
+Injector <|.. RunningInjector
+
+class StartupInjector {
+    -string proc_path
+    -string dll_path
+
+    +Running() bool
+    +Terminate()
+}
+
+Injector <|.. StartupInjector
 ```
-EXCLUDE_PATTERNS = *.md
-```
-
-This option is in "***Expert***" -> "***Input***" page.
 
 ## License
 
-Distributed under the *GNU General Public* License. See `LICENSE` for more information.
-
-## Contact
-
-***GitHub***: https://github.com/czs108/
-
-***E-Mail***: chenzs108@outlook.com
-
-***WeChat***: chenzs108
+Distributed under the *MIT License*. See `LICENSE` for more information.

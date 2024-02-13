@@ -3,10 +3,11 @@
  * @brief The injector for new starting processes.
  *
  * @author Chen Zhenshuo (chenzs108@outlook.com)
+ * @author Liu Guowen (liu.guowen@outlook.com)
  * @version 1.0
  * @date 2020-10-09
  * @par GitHub
- * https://github.com/czs108/
+ * https://github.com/Zhuagenborn
  */
 
 module;
@@ -39,8 +40,7 @@ public:
      * @param proc_path The path of a process.
      * @param dll_path  The path of a Dll.
      */
-    StartupInjector(const std::string_view proc_path,
-                    const std::string_view dll_path);
+    StartupInjector(std::string_view proc_path, std::string_view dll_path);
 
     void Inject() override;
 
@@ -54,7 +54,7 @@ public:
     /**
      * Check whether the process is running.
      *
-     * @return @em true if the process is running, otherwise @em false.
+     * @return @p true if the process is running, otherwise @p false.
      */
     bool Running() const noexcept;
 
@@ -70,10 +70,10 @@ private:
     using HandleCloser = std::function<void(PROCESS_INFORMATION*)>;
 
     //! The path of the process.
-    const std::string proc_path_;
+    std::string proc_path_;
 
     //! The path of the Dll.
-    const std::string dll_path_;
+    std::string dll_path_;
 
     //! The process information.
     std::unique_ptr<PROCESS_INFORMATION, HandleCloser> proc_{};
@@ -85,16 +85,16 @@ module : private;
 /**
  * Close all handles of a process.
  *
- * @param proc  The @em PROCESS_INFORMATION structure of a process.
+ * @param proc  The @p PROCESS_INFORMATION structure of a process.
  */
-void CloseHandles(PROCESS_INFORMATION* const proc) noexcept;
+void CloseHandles(PROCESS_INFORMATION* proc) noexcept;
 
 /**
  * Terminate a process.
  *
- * @param proc  The @em PROCESS_INFORMATION structure of a process.
+ * @param proc  The @p PROCESS_INFORMATION structure of a process.
  */
-void Terminate(PROCESS_INFORMATION* const proc) noexcept;
+void Terminate(PROCESS_INFORMATION* proc) noexcept;
 
 
 StartupInjector::StartupInjector(const std::string_view proc_path,
@@ -111,13 +111,13 @@ StartupInjector::StartupInjector(const std::string_view proc_path,
 void StartupInjector::Inject() {
     assert(!proc_path_.empty() && !dll_path_.empty());
 
-    auto proc_terminator = [](PROCESS_INFORMATION* const proc) noexcept {
+    auto proc_terminator{ [](PROCESS_INFORMATION* const proc) noexcept {
         assert(proc != nullptr);
 
         ::Terminate(proc);
         CloseHandles(proc);
         delete proc;
-    };
+    } };
 
     std::unique_ptr<PROCESS_INFORMATION, decltype(proc_terminator)> proc{
         new PROCESS_INFORMATION{}, proc_terminator
@@ -137,12 +137,12 @@ void StartupInjector::Inject() {
         ThrowLastError();
     }
 
-    auto proc_closer = [](PROCESS_INFORMATION* const proc) noexcept {
+    auto proc_closer{ [](PROCESS_INFORMATION* const proc) noexcept {
         assert(proc != nullptr);
 
         CloseHandles(proc);
         delete proc;
-    };
+    } };
 
     proc_ = { proc.release(), proc_closer };
 }

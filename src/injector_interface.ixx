@@ -3,10 +3,11 @@
  * @brief The interface of a Dll injector.
  *
  * @author Chen Zhenshuo (chenzs108@outlook.com)
+ * @author Liu Guowen (liu.guowen@outlook.com)
  * @version 1.0
  * @date 2020-10-09
  * @par GitHub
- * https://github.com/czs108/
+ * https://github.com/Zhuagenborn
  */
 
 export module injector_interface;

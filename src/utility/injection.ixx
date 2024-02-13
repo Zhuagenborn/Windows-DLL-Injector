@@ -3,10 +3,11 @@
  * @brief Some injection tools.
  *
  * @author Chen Zhenshuo (chenzs108@outlook.com)
+ * @author Liu Guowen (liu.guowen@outlook.com)
  * @version 1.0
  * @date 2020-10-09
  * @par GitHub
- * https://github.com/czs108/
+ * https://github.com/Zhuagenborn
  */
 
 module;
@@ -30,23 +31,23 @@ export using HandleCloser = std::function<void(HANDLE*)>;
 /**
  * A default function for closing a handle.
  */
-export HandleCloser default_handle_closer = [](HANDLE* const handle) noexcept {
+export HandleCloser default_handle_closer{ [](HANDLE* const handle) noexcept {
     assert(handle != nullptr);
 
     if (*handle != nullptr) {
         CloseHandle(*handle);
     }
-};
+} };
 
 /**
  * A default function for closing a handle and deleting its memory.
  */
-export HandleCloser default_handle_deleter = [](HANDLE* const handle) noexcept {
+export HandleCloser default_handle_deleter{ [](HANDLE* const handle) noexcept {
     assert(handle != nullptr);
 
     default_handle_closer(handle);
     delete handle;
-};
+} };
 
 /**
  * Allocate memory within a process.
@@ -55,7 +56,7 @@ export HandleCloser default_handle_deleter = [](HANDLE* const handle) noexcept {
  * @param size  The required size.
  * @return The base address of the memory.
  */
-export void* AllocRemoteMemory(const HANDLE proc, const std::size_t size);
+export void* AllocRemoteMemory(HANDLE proc, std::size_t size);
 
 /**
  * Create a Dll injection thread within a process.
@@ -64,9 +65,9 @@ export void* AllocRemoteMemory(const HANDLE proc, const std::size_t size);
  * @param size  The path of a Dll.
  * @param wait  Whether to wait for the thread to end.
  */
-export void CreateRemoteInjectThread(const HANDLE proc,
-                                     const std::string_view dll_path,
-                                     const bool wait);
+export void CreateRemoteInjectThread(HANDLE proc,
+                                     std::string_view dll_path,
+                                     bool wait);
 
 
 module : private;
@@ -76,8 +77,8 @@ void* AllocRemoteMemory(const HANDLE proc, const std::size_t size) {
     assert(size != 0);
 
     // The memory cannot be deleted. Otherwise, the target process might crash.
-    if (const auto buffer = VirtualAllocEx(
-            proc, nullptr, size, MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE);
+    if (const auto buffer{ VirtualAllocEx(
+            proc, nullptr, size, MEM_RESERVE | MEM_COMMIT, PAGE_READWRITE) };
         buffer == nullptr) {
         ThrowLastError();
     } else {
@@ -92,19 +93,19 @@ void CreateRemoteInjectThread(const HANDLE proc,
     assert(proc != nullptr);
     assert(!dll_path.empty());
 
-    const auto dll_path_size = dll_path.length() + 1;
-    const auto buffer = AllocRemoteMemory(proc, dll_path_size);
+    const auto dll_path_size{ dll_path.length() + 1 };
+    const auto buffer{ AllocRemoteMemory(proc, dll_path_size) };
     if (!WriteProcessMemory(proc, buffer, dll_path.data(), dll_path_size,
                             nullptr)) {
         ThrowLastError();
     }
 
-    const auto kernel32 = GetModuleHandleA("kernel32.dll");
+    const auto kernel32{ GetModuleHandleA("kernel32.dll") };
     if (kernel32 == nullptr) {
         ThrowLastError();
     }
 
-    const auto load_library = GetProcAddress(kernel32, "LoadLibraryA");
+    const auto load_library{ GetProcAddress(kernel32, "LoadLibraryA") };
     if (load_library == nullptr) {
         ThrowLastError();
     }

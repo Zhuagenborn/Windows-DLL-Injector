@@ -3,10 +3,11 @@
  * @brief The main program.
  *
  * @author Chen Zhenshuo (chenzs108@outlook.com)
+ * @author Liu Guowen (liu.guowen@outlook.com)
  * @version 1.0
  * @date 2020-10-09
  * @par GitHub
- * https://github.com/czs108/
+ * https://github.com/Zhuagenborn
  */
 
 import injector;
@@ -20,6 +21,8 @@ import utility.windows_error;
 #include <string>
 #include <string_view>
 #include <vector>
+#include <algorithm>
+#include <system_error>
 
 #include <cassert>
 
@@ -28,8 +31,8 @@ namespace {
 /**
  * Get command line arguments.
  */
-std::vector<std::string> GetCmdLineArguments(const std::size_t argc,
-                                             const char* const argv[]) noexcept;
+std::vector<std::string> GetCmdLineArguments(std::size_t argc,
+                                             const char* argv[]) noexcept;
 
 /**
  * Print the help information.
@@ -42,7 +45,7 @@ void PrintHelp() noexcept;
 int main(int argc, char* argv[]) {
     assert(argc >= 0);
 
-    const auto args = GetCmdLineArguments(static_cast<std::size_t>(argc), argv);
+    const auto args{ GetCmdLineArguments(static_cast<std::size_t>(argc), argv) };
 
     if (args.size() != 3 && args.size() != 4) {
         PrintHelp();
@@ -74,7 +77,7 @@ int main(int argc, char* argv[]) {
         std::cout << "[*] The injection has finished." << std::endl;
         return EXIT_SUCCESS;
 
-    } catch (const WindowsError& exp) {
+    } catch (const std::system_error& exp) {
         if (exp.code().value() == ERROR_SUCCESS) {
             std::cerr << "[!] Error: Maybe Dll-Injector cannot find the "
                          "target window."
@@ -96,11 +99,8 @@ namespace {
 
 std::vector<std::string> GetCmdLineArguments(
     const std::size_t argc, const char* const argv[]) noexcept {
-    std::vector<std::string> args{ argc };
-    for (auto i = 0; i != argc; i++) {
-        args[i] = argv[i];
-    }
-
+    std::vector<std::string> args{};
+    std::ranges::copy_n(argv, argc, std::back_inserter(args));
     return args;
 }
 
