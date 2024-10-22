@@ -1,6 +1,6 @@
 /**
  * @file injector_interface.ixx
- * @brief The interface of a Dll injector.
+ * @brief The interface of a dynamic-link library injector.
  *
  * @author Chen Zhenshuo (chenzs108@outlook.com)
  * @author Liu Guowen (liu.guowen@outlook.com)
@@ -12,15 +12,11 @@
 
 export module injector_interface;
 
-/**
- * The interface of a Dll injector.
- */
+//! The interface of a dynamic-link library injector.
 export class Injector {
 public:
     virtual ~Injector() = default;
 
-    /**
-     * Injection.
-     */
+    //! Injection.
     virtual void Inject() = 0;
 };

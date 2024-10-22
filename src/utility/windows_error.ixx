@@ -18,11 +18,7 @@ module;
 #include <system_error>
 export module utility.windows_error;
 
-/**
- * Throw a @p std::system_error exception containing the last-error.
- *
- * @warning This function does not return.
- */
+//! Throw a @p std::system_error exception containing the last-error.
 export [[noreturn]] void ThrowLastError();
 
 module : private;

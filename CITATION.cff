@@ -6,6 +6,6 @@ authors:
 - family-names: Liu
   given-names: Guowen
   orcid: https://orcid.org/0000-0002-8375-5729
-title: Windows DLL Injector
+title: Windows Dynamic-Link Library Injector
 date-released: 2022-05-21
 url: https://github.com/Zhuagenborn/Windows-DLL-Injector

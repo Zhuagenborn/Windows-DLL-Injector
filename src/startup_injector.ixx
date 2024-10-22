@@ -29,50 +29,47 @@ import utility.injection;
 import utility.windows_error;
 
 /**
+ * @brief
  * The injector for new starting processes.
- * It can create a new process with a Dll injected.
+ * It can create a new process with a dynamic-link library injected.
  */
 export class StartupInjector final : public Injector {
 public:
     /**
-     * A constructor.
+     * @brief A constructor.
      *
      * @param proc_path The path of a process.
-     * @param dll_path  The path of a Dll.
+     * @param dll_path  The path of a dynamic-link library.
      */
     StartupInjector(std::string_view proc_path, std::string_view dll_path);
 
     void Inject() override;
 
     /**
-     * Get the information of the process.
+     * @brief Get the information of the process.
      *
      * @return If the process failed to create, the return value is empty.
      */
     std::optional<PROCESS_INFORMATION> GetHandle() const noexcept;
 
     /**
-     * Check whether the process is running.
+     * @brief Check whether the process is running.
      *
      * @return @p true if the process is running, otherwise @p false.
      */
     bool Running() const noexcept;
 
-    /**
-     * Terminate the process.
-     */
+    //! Terminate the process.
     void Terminate() noexcept;
 
 private:
-    /**
-     * The function type for closing all handles of a process.
-     */
+    //! The function type for closing all handles of a process.
     using HandleCloser = std::function<void(PROCESS_INFORMATION*)>;
 
     //! The path of the process.
     std::string proc_path_;
 
-    //! The path of the Dll.
+    //! The path of the dynamic-link library.
     std::string dll_path_;
 
     //! The process information.
@@ -83,16 +80,16 @@ private:
 module : private;
 
 /**
- * Close all handles of a process.
+ * @brief Close all handles of a process.
  *
- * @param proc  The @p PROCESS_INFORMATION structure of a process.
+ * @param proc The @p PROCESS_INFORMATION structure of a process.
  */
 void CloseHandles(PROCESS_INFORMATION* proc) noexcept;
 
 /**
- * Terminate a process.
+ * @brief Terminate a process.
  *
- * @param proc  The @p PROCESS_INFORMATION structure of a process.
+ * @param proc The @p PROCESS_INFORMATION structure of a process.
  */
 void Terminate(PROCESS_INFORMATION* proc) noexcept;
 
@@ -102,7 +99,7 @@ StartupInjector::StartupInjector(const std::string_view proc_path,
     proc_path_{ proc_path }, dll_path_{ dll_path } {
     if (proc_path_.empty() || dll_path_.empty()) {
         throw std::invalid_argument{
-            "The path of the process or Dll is null.\n"
+            "The path of the process or dynamic-link library is null.\n"
         };
     }
 }

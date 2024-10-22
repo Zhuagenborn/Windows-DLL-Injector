@@ -31,16 +31,17 @@ import utility.windows_error;
 #pragma comment(lib, "shlwapi.lib")
 
 /**
+ * @brief
  * The injector for running processes.
- * It can inject a Dll into a running process by searching its window title.
+ * It can inject a dynamic-link library into a running process by searching its window title.
  */
 export class RunningInjector final : public Injector {
 public:
     /**
-     * A constructor.
+     * @brief A constructor.
      *
      * @param win_title The window title of a process.
-     * @param dll_path  The path of a Dll.
+     * @param dll_path The path of a dynamic-link library.
      */
     RunningInjector(std::string_view win_title, std::string_view dll_path);
 
@@ -50,7 +51,7 @@ private:
     //! The window title of the process.
     std::string win_title_;
 
-    //! The path of the Dll.
+    //! The path of the dynamic-link library.
     std::string dll_path_;
 };
 
@@ -58,14 +59,14 @@ private:
 module : private;
 
 /**
- * Get the full path of a file.
+ * @brief Get the full path of a file.
  *
- * @param path  The relative path of a file.
+ * @param path The relative path of a file.
  */
 std::string GetFullFilePath(std::string_view path);
 
 /**
- * Get the handle of a process by its window title.
+ * @brief Get the handle of a process by its window title.
  *
  * @param win_title The window title of a process.
  *
@@ -82,7 +83,7 @@ RunningInjector::RunningInjector(const std::string_view win_title,
     win_title_{ win_title }, dll_path_{ dll_path } {
     if (win_title_.empty() || dll_path_.empty()) {
         throw std::invalid_argument{
-            "The target windows title or the path of the Dll is null.\n"
+            "The target windows title or dynamic-link library path is null.\n"
         };
     }
 

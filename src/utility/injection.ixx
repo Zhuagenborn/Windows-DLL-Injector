@@ -23,14 +23,10 @@ export module utility.injection;
 
 import utility.windows_error;
 
-/**
- * The function type for closing a handle.
- */
+//! The function type for closing a handle.
 export using HandleCloser = std::function<void(HANDLE*)>;
 
-/**
- * A default function for closing a handle.
- */
+//! A default function for closing a handle.
 export HandleCloser default_handle_closer{ [](HANDLE* const handle) noexcept {
     assert(handle != nullptr);
 
@@ -39,9 +35,7 @@ export HandleCloser default_handle_closer{ [](HANDLE* const handle) noexcept {
     }
 } };
 
-/**
- * A default function for closing a handle and deleting its memory.
- */
+//! A default function for closing a handle and deleting its memory.
 export HandleCloser default_handle_deleter{ [](HANDLE* const handle) noexcept {
     assert(handle != nullptr);
 
@@ -50,20 +44,20 @@ export HandleCloser default_handle_deleter{ [](HANDLE* const handle) noexcept {
 } };
 
 /**
- * Allocate memory within a process.
+ * @brief Allocate memory within a process.
  *
- * @param proc  The handle of a process.
- * @param size  The required size.
+ * @param proc The handle of a process.
+ * @param size The required size.
  * @return The base address of the memory.
  */
 export void* AllocRemoteMemory(HANDLE proc, std::size_t size);
 
 /**
- * Create a Dll injection thread within a process.
+ * @brief Create a dynamic-link library injection thread within a process.
  *
- * @param proc  The handle of a process.
- * @param size  The path of a Dll.
- * @param wait  Whether to wait for the thread to end.
+ * @param proc The handle of a process.
+ * @param size The path of a dynamic-link library.
+ * @param wait Whether to wait for the thread to end.
  */
 export void CreateRemoteInjectThread(HANDLE proc,
                                      std::string_view dll_path,

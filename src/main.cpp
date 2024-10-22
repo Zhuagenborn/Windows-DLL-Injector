@@ -111,7 +111,7 @@ void PrintHelp() noexcept {
               << std::endl
               << std::endl;
 
-    std::cout << "[!] Example (1): Create a new process with a Dll injected."
+    std::cout << "[!] Example (1): Create a new process with a dynamic-link library injected."
               << std::endl;
     std::cout << "\t```" << std::endl;
     std::cout << "\tDll-Injector -f <proc-path> <dll-path>" << std::endl;
@@ -121,7 +121,7 @@ void PrintHelp() noexcept {
               << std::endl
               << std::endl;
 
-    std::cout << "[!] Example (2): Inject a Dll into a running process by "
+    std::cout << "[!] Example (2): Inject a dynamic-link library into a running process by "
                  "its window title."
               << std::endl;
     std::cout << "\t```" << std::endl;
